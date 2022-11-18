@@ -15,7 +15,8 @@ public class Main {
 
 //        selectionSort(a);
 //        bubbleSort(a);
-        insertionSort(a);
+//        insertionSort(a);
+        shellSort(a);
         for (Integer integer :a) {
             System.out.print(integer+" ");
         }
@@ -60,11 +61,37 @@ public class Main {
      */
     public static void insertionSort(int a[]){
         for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (a[i]<a[j]){
-                    int temp = a[i];
-                    a[i] = a[j];
-                    a[j] = temp;
+            for (int j = i; j > 0; j--) {
+                if (a[j]<a[j-1]){
+                    int temp = a[j];
+                    a[j] = a[j-1];
+                    a[j-1] = temp;
+                }
+            }
+        }
+    }
+
+    /**
+     * 希尔排序
+     * @param a
+     */
+    public static void shellSort(int a[]){
+        int step = a.length;
+        while (step>1) {
+            step = step / 2;
+            //根据步长分组
+            for (int i = 0; i < step; i++) {
+                //怎么确定a.length-1-i是i组在a.length内的最后一个数
+                //不用确定因为a.length-1-i和a.length-1-(i+1)一定是两组
+                for (int j = i; j < a.length; j = j + step) {
+                    for (int k = j; k >= step ; k=k-step) {
+                        if (a[k] < a[k - step]) {
+                            int temp = a[k];
+                            a[k] = a[k - step];
+                            a[k - step] = temp;
+                        }
+                    }
+
                 }
             }
         }
